@@ -8,7 +8,7 @@ namespace Roshambo
     {
         public override Roshambo GenerateRoshambo()
         {
-            return (Roshambo)1;
+            return Roshambo.paper;
         }
     }
 }

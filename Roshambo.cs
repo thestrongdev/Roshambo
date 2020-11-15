@@ -10,4 +10,7 @@ namespace Roshambo
         paper = 1,
         scissors =2
     }
+
+    
+
 }
