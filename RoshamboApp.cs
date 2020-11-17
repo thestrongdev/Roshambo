@@ -7,9 +7,11 @@ namespace Roshambo
 {
     class RoshamboApp
     {
+        //private Roshambo _playerRosh;
 
-        public static void playGame()
+        public static void PlayGame()
         {
+            //return to main menu, quit, play again --- ENUM 
            
                 Console.WriteLine("Enter your name: ");
                 string userName = Console.ReadLine();
@@ -33,30 +35,39 @@ namespace Roshambo
 
                     //USE VALIDATOR CLASS HERE FOR USER WEAPON!!!
 
-                    Roshambo pcRosh = GetPcChoice(userPlayer);
+                    Roshambo pcRosh = GetPcChoice(userPlayer); //<<---change this based on playagainst...
+
+
                     Roshambo playerRosh = GetUserChoice(userWeapon);
 
                     Console.WriteLine($"{userName}: {playerRosh}");
                     Console.WriteLine($"{userPlayer.ToUpper()}: {pcRosh}");
                     Console.WriteLine();
 
-                    var roshList = new Dictionary<Roshambo, string>
+             
+
+            string winner;
+
+                if (playerRosh != pcRosh)
                 {
-                    //{userName, playerRosh},
-                    //{userPlayer, pcRosh}
 
-                    {playerRosh, userName },
-                    {pcRosh, userPlayer }
-                };
+                    var roshList = new Dictionary<Roshambo, string>
+                    {
+                    //    //{userName, playerRosh},
+                    //    //{userPlayer, pcRosh}
 
-                    string winner;
+                    { playerRosh, userName },
+                    { pcRosh, userPlayer }
+                     };
 
                     if (roshList.ContainsKey(Roshambo.rock) && roshList.ContainsKey(Roshambo.scissors))
+                        //for every if/else, extract that all into one method - pass in parameters
                     {
+
                         winner = roshList[Roshambo.rock];
                         Console.WriteLine($"{winner} wins");
 
-                        //PUT BELOW INTO METHOD SINCE WE USE 3x
+                        //PUT BELOW INTO METHOD SINCE WE USE 3x; keep winnings in the class itself (outside of this method)
                         if (winner.Equals(userName))
                         {
                             userWins += 1;
@@ -69,6 +80,7 @@ namespace Roshambo
                     }
                     else if (roshList.ContainsKey(Roshambo.rock) && roshList.ContainsKey(Roshambo.paper))
                     {
+
                         winner = roshList[Roshambo.paper];
                         Console.WriteLine($"{winner} wins");
 
@@ -83,12 +95,13 @@ namespace Roshambo
                         }
 
                     }
-                    else if (roshList.ContainsKey(Roshambo.paper) && roshList.ContainsKey(Roshambo.scissors))
+                    else /*if (roshList.ContainsKey(Roshambo.paper) && roshList.ContainsKey(Roshambo.scissors))*/
                     {
+
                         winner = roshList[Roshambo.paper];
                         Console.WriteLine($"{winner} wins");
 
-                        //PUT BELOW INTO METHOD SINCE WE USE 3x
+                        //PUT BELOW INTO METHOD SINCE WE USE 3x; make wins/losses fields
                         if (winner.Equals(userName))
                         {
                             userWins += 1;
@@ -98,13 +111,16 @@ namespace Roshambo
                             userLosses += 1;
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine("Draw!");
-                        draws += 1;
-                    }
+                }
+                else
+                {
+                    Console.WriteLine("Draw!");
+                    draws += 1;
+                }
 
                     Console.WriteLine();
+
+                    //put below block in method
 
                     Console.WriteLine("Play again?(y/n)");
                     string userCont = Console.ReadLine();
@@ -125,12 +141,17 @@ namespace Roshambo
 
         }
 
+        //public static bool KeepScore(string userName, string winner)
+        //{
+            
+        //}
+
         public static string PlayAgainst()
         {
             do
             {
                 Console.WriteLine("\nWho would you like to play against? (choose from below)");
-                Console.WriteLine("Theresa (T)\nCandace (C)");
+                Console.WriteLine("Theresa (T)\nCandace (C)\nDoublebass(D)");
                 string userPlayer = Console.ReadLine();
 
                 if (!Validator.CheckPlayer(userPlayer))
@@ -169,7 +190,7 @@ namespace Roshambo
             return playerRosh;
         }
 
-        public static Roshambo GetPcChoice(string player)
+        public static Roshambo GetPcChoice(string player, Roshambo userWeapon)
         {
             do { 
 
@@ -179,18 +200,40 @@ namespace Roshambo
                     var playerT = playerOne.GenerateRoshambo();
                     return playerT;
                 }
-                else
+                else if (player.Equals("C", StringComparison.OrdinalIgnoreCase))
                 {
                     var playerTwo = new Candace();
                     var playerC = playerTwo.GenerateRoshambo();
                     return playerC;
                 }
+                else
+                {
+                    return Cheater.Cheating(userWeapon);
+                }
     
             } while(true);
+        }
 
+        public static Roshambo GetPcChoice(string player)
+        {
+            do
+            {
 
-            
+                if (player.Equals("T", StringComparison.OrdinalIgnoreCase))
+                {
+                    var playerOne = new Theresa();
+                    var playerT = playerOne.GenerateRoshambo();
+                    return playerT;
+                }
+                else /*if (player.Equals("C", StringComparison.OrdinalIgnoreCase))*/
+                {
+                    var playerTwo = new Candace();
+                    var playerC = playerTwo.GenerateRoshambo();
+                    return playerC;
+                }
+              
 
+            } while (true);
         }
 
 

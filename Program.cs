@@ -10,7 +10,7 @@ namespace Roshambo
         {
             try
             {
-                RoshamboApp.playGame();
+                RoshamboApp.PlayGame();
             }
             catch (Exception ex)
             {

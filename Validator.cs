@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Roshambo
 {
-    class Validator
+    public class Validator
     {
         public static bool CheckPlayer(string userPlayer)
         {
@@ -18,7 +18,7 @@ namespace Roshambo
             }
         }
 
-        public static bool CheckWeapon(string userWeapon)
+        public static bool CheckWeapon(string userWeapon) //check if valid ENUM here; then return enum itself or whatever .... check if enum once then use switch case
         {
             if (!userWeapon.Equals("r", StringComparison.OrdinalIgnoreCase) && !userWeapon.Equals("p", StringComparison.OrdinalIgnoreCase)
                 && !userWeapon.Equals("s", StringComparison.OrdinalIgnoreCase))
